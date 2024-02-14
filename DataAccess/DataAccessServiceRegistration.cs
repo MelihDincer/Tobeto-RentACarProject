@@ -3,15 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DataAccess
+namespace DataAccess;
+public static class DataAccessServiceRegistration
 {
-    public static class DataAccessServiceRegistration
+    public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration
-                .GetConnectionString("TobetoRentACarConnectionString")));
-            return services;
-        }
+        services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration
+            .GetConnectionString("TobetoRentACarConnectionString")));
+        return services;
     }
 }

@@ -14,6 +14,8 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
             builder.Property(x => x.CreatedDate).HasColumnName("CreatedDate");
             builder.Property(x => x.UpdatedDate).HasColumnName("UpdaedDate");
             builder.Property(x => x.DeletedDate).HasColumnName("DeletedDate");
+
+            builder.HasMany(x => x.Models);
         }
     }
 }
