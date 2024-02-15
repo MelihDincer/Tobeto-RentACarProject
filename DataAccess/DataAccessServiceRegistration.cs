@@ -9,7 +9,7 @@ public static class DataAccessServiceRegistration
     public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration
-            .GetConnectionString("TobetoRentACarConnectionString")));
+            .GetConnectionString("TobetoNet3AConnectionString")));
         return services;
     }
 }
