@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Business.Requests.Brands;
 using Entities.Concretes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public void AddAsync(Brand brand)
+        public void AddAsync(CreateBrandRequest request)
         {
-            _brandService.AddAsync(brand);
+            _brandService.AddAsync(request);
         }
     }
 }
