@@ -1,10 +1,9 @@
-﻿using Core.DataAccess;
-using Core.Entities;
+﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
-namespace Core.EntityFramework
+namespace Core.DataAccess.EntityFramework
 {
     public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<TEntity, TEntityId>
          where TEntity : BaseEntity<TEntityId>
