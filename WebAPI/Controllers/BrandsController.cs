@@ -1,7 +1,6 @@
 ﻿using Business.Abstracts;
 using Business.Requests.Brands;
 using Business.Responses.Brands;
-using Entities.Concretes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

@@ -16,6 +16,7 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
             builder.Property(x => x.UpdatedDate).HasColumnName("UpdaedDate");
             builder.Property(x => x.DeletedDate).HasColumnName("DeletedDate");
 
+            //Birden fazla model olabilir, ama bir marka var.
             builder.HasOne(x => x.Brand);
             builder.HasMany(x => x.Cars);
         }
