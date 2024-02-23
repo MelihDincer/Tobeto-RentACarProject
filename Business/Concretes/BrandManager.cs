@@ -2,9 +2,9 @@
 using Business.Abstracts;
 using Business.Requests.Brands;
 using Business.Responses.Brands;
+using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
-using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes;
 
@@ -18,19 +18,19 @@ public class BrandManager : IBrandService
         _mapper = mapper;
     }
 
-    public async Task<CreateBrandResponse> AddAsync(CreateBrandRequest request)
+    public async Task<IDataResult<CreateBrandResponse>> AddAsync(CreateBrandRequest request)
     {
         Brand brand = _mapper.Map<Brand>(request);
         await _brandRepository.Add(brand);
 
         CreateBrandResponse response = _mapper.Map<CreateBrandResponse>(brand);
-        return response;
+        return new SuccessDataResult<CreateBrandResponse>(response,"Added Successfully");
     }
 
-    public async Task<List<GetAllBrandResponse>> GetAllAsync()
+    public async Task<IDataResult<List<GetAllBrandResponse>>> GetAllAsync()
     {
         List<Brand> brands = await _brandRepository.GetAll();
         List<GetAllBrandResponse> responses = _mapper.Map<List<GetAllBrandResponse>>(brands);
-        return responses;
+        return new SuccessDataResult<List<GetAllBrandResponse>>(responses,"Listed Successfully");
     }
 }

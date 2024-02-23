@@ -1,4 +1,4 @@
-﻿namespace Business.Requests.Car
+﻿namespace Business.Requests.Cars
 {
     public class CreateCarRequest
     {

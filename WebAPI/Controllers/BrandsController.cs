@@ -1,4 +1,5 @@
-﻿using Business.Abstracts;
+﻿using Azure.Core;
+using Business.Abstracts;
 using Business.Requests.Brands;
 using Business.Responses.Brands;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,25 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<CreateBrandResponse> AddAsync(CreateBrandRequest request)
+        public async Task<IActionResult> AddAsync(CreateBrandRequest request)
         {
-            return await _brandService.AddAsync(request);
+            var result = await _brandService.AddAsync(request);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpGet]
-        public async Task<List<GetAllBrandResponse>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await _brandService.GetAllAsync();
+            var result = await _brandService.GetAllAsync();
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

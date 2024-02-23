@@ -3,7 +3,6 @@
     public class Result : IResult
     {
         public bool Succes { get; }
-
         public string Message { get; }
 
         public Result(bool success, string message): this(success)
