@@ -11,13 +11,14 @@ namespace Entities.Concretes
         public double DailyPrice { get; set; }
 
         public Model Model { get; set; }
+        public virtual ICollection<CarImage> CarImages { get; set; }
 
         public Car()
         {
-            
+            CarImages = new HashSet<CarImage>();
         }
 
-        public Car(int modelId, int modelYear, string plate, int state, double dailyPrice, Model model)
+        public Car(int modelId, int modelYear, string plate, int state, double dailyPrice) : this()
         {
             Id = modelId;
             ModelId = modelId;

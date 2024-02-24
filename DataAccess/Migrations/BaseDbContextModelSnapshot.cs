@@ -24,12 +24,10 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concretes.Brand", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
@@ -99,6 +97,41 @@ namespace DataAccess.Migrations
                     b.ToTable("Cars", (string)null);
                 });
 
+            modelBuilder.Entity("Entities.Concretes.CarImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int")
+                        .HasColumnName("CarId");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ImagePath");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("CarImages", (string)null);
+                });
+
             modelBuilder.Entity("Entities.Concretes.Model", b =>
                 {
                     b.Property<int>("Id")
@@ -108,8 +141,8 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BrandId")
-                        .HasColumnType("int")
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("BrandId");
 
                     b.Property<DateTime>("CreatedDate")
@@ -147,6 +180,17 @@ namespace DataAccess.Migrations
                     b.Navigation("Model");
                 });
 
+            modelBuilder.Entity("Entities.Concretes.CarImage", b =>
+                {
+                    b.HasOne("Entities.Concretes.Car", "Car")
+                        .WithMany("CarImages")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
             modelBuilder.Entity("Entities.Concretes.Model", b =>
                 {
                     b.HasOne("Entities.Concretes.Brand", "Brand")
@@ -161,6 +205,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concretes.Brand", b =>
                 {
                     b.Navigation("Models");
+                });
+
+            modelBuilder.Entity("Entities.Concretes.Car", b =>
+                {
+                    b.Navigation("CarImages");
                 });
 
             modelBuilder.Entity("Entities.Concretes.Model", b =>

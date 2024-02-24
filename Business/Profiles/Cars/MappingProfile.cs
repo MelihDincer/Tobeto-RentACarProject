@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business.Requests.Car;
+using Business.Requests.Cars;
 using Business.Responses.Car;
 using Entities.Concretes;
 

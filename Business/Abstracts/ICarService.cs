@@ -1,4 +1,4 @@
-﻿using Business.Requests.Car;
+﻿using Business.Requests.Cars;
 using Business.Responses.Car;
 using Core.Utilities.Results;
 

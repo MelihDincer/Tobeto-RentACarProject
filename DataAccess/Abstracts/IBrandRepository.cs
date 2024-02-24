@@ -3,6 +3,6 @@ using Entities.Concretes;
 
 namespace DataAccess.Abstracts;
 
-public interface IBrandRepository : IAsyncRepository<Brand, int>
+public interface IBrandRepository : IAsyncRepository<Brand, Guid>
 {
 }

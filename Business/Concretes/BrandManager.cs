@@ -21,6 +21,7 @@ public class BrandManager : IBrandService
     public async Task<IDataResult<CreateBrandResponse>> AddAsync(CreateBrandRequest request)
     {
         Brand brand = _mapper.Map<Brand>(request);
+        brand.Id = Guid.NewGuid();
         await _brandRepository.Add(brand);
 
         CreateBrandResponse response = _mapper.Map<CreateBrandResponse>(brand);

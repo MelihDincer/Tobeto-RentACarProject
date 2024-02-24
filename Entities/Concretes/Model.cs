@@ -4,7 +4,7 @@ namespace Entities.Concretes
 {
     public class Model : BaseEntity<int>
     {
-        public int BrandId { get; set; } //1
+        public Guid BrandId { get; set; } //1
         public string Name { get; set; } //"A6"
 
         public virtual Brand? Brand { get; set; }
@@ -14,7 +14,7 @@ namespace Entities.Concretes
         {
             Cars = new HashSet<Car>();
         }
-        public Model(int id, int brandId, string name)
+        public Model(int id, Guid brandId, string name)
         {
             Id = id;
             BrandId = brandId;

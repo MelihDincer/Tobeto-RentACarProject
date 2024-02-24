@@ -1,6 +1,7 @@
 ﻿using Business.Abstracts;
-using Business.Requests.Car;
+using Business.Requests.Cars;
 using Business.Responses.Car;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<List<GetAllCarResponse>> GetAllAsync()
+        public async Task<IDataResult<List<GetAllCarResponse>>> GetAllAsync()
         {
             return await _carService.GetAllAsync();
         }

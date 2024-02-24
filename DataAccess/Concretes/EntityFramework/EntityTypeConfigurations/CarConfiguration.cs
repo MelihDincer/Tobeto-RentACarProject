@@ -17,6 +17,7 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
             builder.Property(x => x.DailyPrice).HasColumnName("DailyPrice");
 
             builder.HasOne(x => x.Model);
+            builder.HasMany(x => x.CarImages);
         }
     }
 }
