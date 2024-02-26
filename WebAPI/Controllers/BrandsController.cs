@@ -26,5 +26,12 @@ namespace WebAPI.Controllers
         {
             return HandleDataResult(await _brandService.GetAllAsync());
         }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteBrandRequest deleteBrandRequest)
+        {
+            return HandleResult(await _brandService.DeleteAsync(deleteBrandRequest));
+
+        }
     }
 }

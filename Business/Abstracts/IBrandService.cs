@@ -8,4 +8,5 @@ public interface IBrandService
 {
     Task<IDataResult<CreateBrandResponse>> AddAsync(CreateBrandRequest request);
     Task<IDataResult<List<GetAllBrandResponse>>> GetAllAsync();
+    Task<IResult> DeleteAsync(DeleteBrandRequest deleteBrandRequest);
 }

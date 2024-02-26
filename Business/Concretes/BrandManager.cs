@@ -25,13 +25,19 @@ public class BrandManager : IBrandService
         await _brandRepository.Add(brand);
 
         CreateBrandResponse response = _mapper.Map<CreateBrandResponse>(brand);
-        return new SuccessDataResult<CreateBrandResponse>(response,"Added Successfully");
+        return new SuccessDataResult<CreateBrandResponse>(response, "Added Successfully");
     }
 
+    public async Task<IResult> DeleteAsync(DeleteBrandRequest deleteBrandRequest)
+    {
+        Brand brand = _mapper.Map<Brand>(deleteBrandRequest);
+        await _brandRepository.Delete(brand);
+        return new SuccessResult("Silindi");
+    }
     public async Task<IDataResult<List<GetAllBrandResponse>>> GetAllAsync()
     {
         List<Brand> brands = await _brandRepository.GetAll();
         List<GetAllBrandResponse> responses = _mapper.Map<List<GetAllBrandResponse>>(brands);
-        return new SuccessDataResult<List<GetAllBrandResponse>>(responses,"Listed Successfully");
+        return new SuccessDataResult<List<GetAllBrandResponse>>(responses, "Listed Successfully");
     }
 }
