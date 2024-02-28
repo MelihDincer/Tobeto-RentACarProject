@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Core.Exceptions.Types
+﻿namespace Core.Exceptions.Types
 {
     public class ValidationException : Exception
     {
