@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
+using Business.Constants;
 using Business.Requests.Brands;
 using Business.Responses.Brands;
-using Core.Exceptions.Types;
+using Business.Rules;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -13,21 +14,24 @@ public class BrandManager : IBrandService
 {
     private readonly IBrandRepository _brandRepository;
     private readonly IMapper _mapper;
-    public BrandManager(IBrandRepository brandRepository, IMapper mapper)
+    private readonly BrandBusinessRules _rules;
+
+    public BrandManager(IBrandRepository brandRepository, IMapper mapper, BrandBusinessRules rules)
     {
         _brandRepository = brandRepository;
         _mapper = mapper;
+        _rules = rules;
     }
 
     public async Task<IDataResult<CreateBrandResponse>> AddAsync(CreateBrandRequest request)
     {
-        await CheckIfBrandNameNotExists(request.Name.TrimStart());
+        await _rules.CheckIfBrandNameNotExists(request.Name.TrimStart());
         Brand brand = _mapper.Map<Brand>(request);
         brand.Id = Guid.NewGuid();
         await _brandRepository.Add(brand);
 
         CreateBrandResponse response = _mapper.Map<CreateBrandResponse>(brand);
-        return new SuccessDataResult<CreateBrandResponse>(response, "Added Successfully");
+        return new SuccessDataResult<CreateBrandResponse>(response, BrandMessage.BrandAdded);
     }
 
     public async Task<IResult> DeleteAsync(DeleteBrandRequest deleteBrandRequest)
@@ -51,10 +55,9 @@ public class BrandManager : IBrandService
         return responses;
     }
 
-    private async Task CheckIfBrandNameNotExists(string brandName)
+    public async Task<Brand> GetById(Guid id)
     {
-        var isExists = await _brandRepository.Get(brand => brand.Name == brandName);
-        if (isExists is not null)
-            throw new BusinessException("Brand name already exists");           
+        Brand brand = await _brandRepository.Get(b => b.Id == id);
+        return brand;
     }
 }
