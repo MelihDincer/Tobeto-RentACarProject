@@ -7,8 +7,6 @@ public class MssqlLogger : LoggerServiceBase
 {
     public MssqlLogger()
     {
-        //MssqlConfiguration logConfiguration = configuration.GetSection("SerilogConfiguration:MssqlConfiguration")
-        //    .Get<MssqlConfiguration>() ?? throw new Exception("");
         MSSqlServerSinkOptions sinkOptions = new()
         { TableName = "Logs", AutoCreateSqlTable = true };
 
