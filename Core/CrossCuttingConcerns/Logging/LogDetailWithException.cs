@@ -1,5 +1,5 @@
 ﻿namespace Core.CrossCuttingConcerns.Logging;
-public class LogDetailsWithException : LogDetail
+public class LogDetailWithException : LogDetail
 {
     public string ExceptionMessage { get; set; }
 }

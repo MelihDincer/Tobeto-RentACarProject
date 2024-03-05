@@ -4,6 +4,8 @@ using Business.Constants;
 using Business.Requests.Brands;
 using Business.Responses.Brands;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -23,6 +25,7 @@ public class BrandManager : IBrandService
         _rules = rules;
     }
 
+    [LogAspect(typeof(MongoDbLogger))]
     public async Task<IDataResult<CreateBrandResponse>> AddAsync(CreateBrandRequest request)
     {
         await _rules.CheckIfBrandNameNotExists(request.Name.TrimStart());
