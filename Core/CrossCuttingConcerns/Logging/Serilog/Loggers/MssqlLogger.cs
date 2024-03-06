@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+using Core.Utilities.IoC;
+using Core.Utilities.Messages;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 
@@ -7,12 +11,14 @@ public class MssqlLogger : LoggerServiceBase
 {
     public MssqlLogger()
     {
+        var configuration = ServiceTool.ServiceProvider.GetRequiredService<IConfiguration>();
+        var logConfig = configuration.GetSection("SerilogConfigurations:MssqlConfiguration").Get<MssqlConfiguration>() ?? throw new Exception(SerilogMessages.NullOptionsMessage);
         MSSqlServerSinkOptions sinkOptions = new()
-        { TableName = "Logs", AutoCreateSqlTable = true };
+        { TableName = logConfig.TableName, AutoCreateSqlTable = logConfig.AutoCreateSqlTable };
 
         ColumnOptions columnOptions = new();
         global::Serilog.Core.Logger serilogConfig = new LoggerConfiguration().WriteTo
-            .MSSqlServer("Server=DESKTOP-PBE5IS4\\SQLEXPRESS;Database=TobetoRentACarDb;Trusted_Connection=true;TrustServerCertificate =true", sinkOptions, columnOptions: columnOptions).CreateLogger();
+            .MSSqlServer(connectionString: logConfig.ConnectionString, sinkOptions: sinkOptions, columnOptions: columnOptions).CreateLogger();
         Logger = serilogConfig;
     }
 }

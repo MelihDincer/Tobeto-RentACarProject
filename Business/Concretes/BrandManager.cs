@@ -25,7 +25,7 @@ public class BrandManager : IBrandService
         _rules = rules;
     }
 
-    [LogAspect(typeof(MssqlLogger))]
+    [LogAspect(typeof(MongoDbLogger))]
     public async Task<IDataResult<CreateBrandResponse>> AddAsync(CreateBrandRequest request)
     {
         await _rules.CheckIfBrandNameNotExists(request.Name.TrimStart());
@@ -44,6 +44,7 @@ public class BrandManager : IBrandService
         return new SuccessResult("Silindi");
     }
 
+    [LogAspect(typeof(MongoDbLogger))]
     public async Task<IDataResult<List<GetAllBrandResponse>>> GetAllAsync()
     {
         List<Brand> brands = await _brandRepository.GetAll();
