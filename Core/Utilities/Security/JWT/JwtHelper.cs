@@ -1,8 +1,10 @@
-﻿using Core.Utilities.Security.Encryption;
+﻿using Core.Extensions;
+using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Core.Utilities.Security.JWT;
 
@@ -35,7 +37,6 @@ public class JwtHelper : ITokenHelper
         };
     }
 
-
     public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user, SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
     {
         var jwt = new JwtSecurityToken(
@@ -46,5 +47,16 @@ public class JwtHelper : ITokenHelper
              signingCredentials: signingCredentials
             );
         return jwt;
+    }
+
+    private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
+    {
+        var claims = new List<Claim>();
+        claims.AddNameIdentifier(user.Id.ToString());
+        claims.AddName($"{user.FirstName}{user.LastName}");
+        claims.AddEmail(user.Email);
+        claims.AddRoles(operationClaims.Select(x => x.Name).ToArray());
+        return claims;
+
     }
 }
