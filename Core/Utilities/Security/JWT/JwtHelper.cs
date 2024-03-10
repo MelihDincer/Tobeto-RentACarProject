@@ -44,7 +44,8 @@ public class JwtHelper : ITokenHelper
              audience: tokenOptions.Audience,
              expires: _expiration,
              notBefore: DateTime.Now,
-             signingCredentials: signingCredentials
+             signingCredentials: signingCredentials,
+             claims: SetClaims(user, operationClaims)
             );
         return jwt;
     }
